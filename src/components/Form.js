@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 
-const Form = () => {
-  const [search, setSearch] = useState({
-    city: '',
-    country: '',
-  });
+const Form = ({ search, setSearch, setDidConsult }) => {
+  const [error, setError] = useState(false);
 
   const { city, country } = search;
 
@@ -15,8 +12,20 @@ const Form = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //validate
+    if (city.trim() === '' || country.trim() === '') {
+      setError(true);
+      return;
+    }
+    setError(false);
+    setDidConsult(true);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {error ? <p className="red darken-4 error">All fields are required</p> : null}
       <div className="input-field col s12">
         <select name="country" id="country" value={country} onChange={handleChange}>
           <option value="">--Select a country--</option>
@@ -33,6 +42,11 @@ const Form = () => {
       <div className="input-field col s12">
         <label htmlFor="city">City:</label>
         <input type="text" name="city" id="city" value={city} onChange={handleChange} />
+      </div>
+      <div className="input-field col s12">
+        <button type="submit" className="waves-effect waves-light btn-large btn-block blue accent-4">
+          Search Weather
+        </button>
       </div>
     </form>
   );
