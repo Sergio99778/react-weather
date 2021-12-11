@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Form = ({ search, setSearch, setDidConsult }) => {
   const [error, setError] = useState(false);
@@ -50,6 +51,12 @@ const Form = ({ search, setSearch, setDidConsult }) => {
       </div>
     </form>
   );
+};
+
+Form.propTypes = {
+  search: PropTypes.object.isRequired,
+  setSearch: PropTypes.func.isRequired,
+  setDidConsult: PropTypes.func.isRequired,
 };
 
 export default Form;
